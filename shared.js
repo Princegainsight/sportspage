@@ -1,5 +1,50 @@
 // shared.js — session helpers used across all pages
 
+// ── 1. Gainsight PX Tag ───────────────────────────────────────────────────
+(function(n,t,a,e,co){
+  var i="aptrinsic";
+  n[i]=n[i]||function(){(n[i].q=n[i].q||[]).push(arguments)};
+  n[i].p=e; n[i].c=co;
+  var r=t.createElement("script");
+  r.async=!0, r.src=a+"?a="+e;
+  var c=t.getElementsByTagName("script")[0];
+  c.parentNode.insertBefore(r,c);
+})(window, document, "https://web-sdk.aptrinsic.com/api/aptrinsic.js", "AP-NUB1I4HQ7CAH-2");
+
+// ── 2. Identify call — fires on every page if user is logged in ───────────
+(function fireIdentifyIfLoggedIn() {
+  const raw = sessionStorage.getItem('sp_user');
+  if (!raw) return; // not logged in — skip silently
+
+  const user = JSON.parse(raw);
+  const firstName = user.name.split(' ')[0];
+  const lastName  = user.name.split(' ').slice(1).join(' ');
+
+  window.addEventListener('load', function () {
+    if (typeof aptrinsic !== 'function') return;
+
+    aptrinsic("identify",
+      {
+        // ── User Fields ──────────────────────────────
+        "id"         : user.email,        // Required — unique user identifier
+        "email"      : user.email,
+        "firstName"  : firstName,
+        "lastName"   : lastName,
+        "signUpDate" : Date.now(),          // current date as unix ms
+        "plan"       : "gold",            // custom attribute
+        "price"      : 95.5,             // custom attribute
+        "userHash"   : ""                 // optional HMAC — leave empty if not using
+      },
+      {
+        // ── Account Fields ───────────────────────────
+        "id"      : "IBM",                        // Required — account identifier
+        "name"    : "International Business Machine",
+        "Program" : "Platinum"                    // custom attribute
+      }
+    );
+  });
+})();
+
 function getUser() {
   const raw = sessionStorage.getItem('sp_user');
   return raw ? JSON.parse(raw) : null;
