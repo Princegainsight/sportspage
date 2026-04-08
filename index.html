@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SportsPulse — Login</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    #login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;overflow:hidden}
+    .login-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1400&q=80') center/cover no-repeat;filter:brightness(.35)}
+    .login-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,.85) 0%,rgba(234,88,12,.3) 100%)}
+    .login-wrap{position:relative;z-index:2;display:flex;gap:0;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);width:100%;max-width:860px;margin:1.5rem}
+    .login-left{background:var(--orange);padding:3rem 2.5rem;width:340px;flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between}
+    .login-left h2{font-size:28px;font-weight:800;color:white;line-height:1.2;margin-bottom:1rem}
+    .login-left p{font-size:14px;color:rgba(255,255,255,.8);line-height:1.7}
+    .sport-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem}
+    .sport-pill{background:rgba(255,255,255,.2);color:white;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500}
+    .login-stats{display:flex;gap:1.5rem;margin-top:2.5rem}
+    .ls{text-align:center}
+    .ls-num{font-size:22px;font-weight:800;color:white}
+    .ls-label{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+    .login-right{background:var(--white);padding:2.5rem;flex:1}
+    .login-right h3{font-size:20px;font-weight:700;margin-bottom:4px}
+    .login-right p{font-size:13px;color:var(--muted);margin-bottom:1.75rem}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--navy2)}
+    .form-group input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+    .form-group input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(234,88,12,.12)}
+    .err{color:var(--red);font-size:12px;margin-top:4px;display:none}
+    .btn-login{width:100%;padding:12px;background:var(--orange);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .2s}
+    .btn-login:hover{background:var(--orange-dark)}
+    .login-note{text-align:center;font-size:12px;color:var(--muted);margin-top:1rem}
+    @media(max-width:640px){.login-wrap{flex-direction:column;max-width:400px}.login-left{width:100%;padding:2rem}.login-stats{justify-content:center}}
+  </style>
+</head>
+<body>
+
+<div id="login-page">
+  <div class="login-bg"></div>
+  <div class="login-overlay"></div>
+  <div class="login-wrap">
+    <div class="login-left">
+      <div>
+        <div style="font-size:28px;margin-bottom:.5rem">🏆</div>
+        <h2>Your sport.<br/>Your league.<br/>Your portal.</h2>
+        <p>Join thousands of athletes registering for events, tracking performance, and competing at every level.</p>
+        <div class="sport-pills">
+          <span class="sport-pill">⚽ Football</span>
+          <span class="sport-pill">🏀 Basketball</span>
+          <span class="sport-pill">🎾 Tennis</span>
+          <span class="sport-pill">🏊 Swimming</span>
+          <span class="sport-pill">🏃 Athletics</span>
+          <span class="sport-pill">🏋️ Fitness</span>
+        </div>
+      </div>
+      <div class="login-stats">
+        <div class="ls"><div class="ls-num">12K+</div><div class="ls-label">Athletes</div></div>
+        <div class="ls"><div class="ls-num">340</div><div class="ls-label">Events</div></div>
+        <div class="ls"><div class="ls-num">48</div><div class="ls-label">Sports</div></div>
+      </div>
+    </div>
+    <div class="login-right">
+      <h3>Sign in to SportsPulse</h3>
+      <p>Access your registrations, events and team dashboard</p>
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="login-name" placeholder="e.g. Alex Johnson" autocomplete="name"/>
+        <div class="err" id="err-name">Please enter your full name</div>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="login-email" placeholder="alex@sportsclub.com"/>
+        <div class="err" id="err-email">Please enter a valid email</div>
+      </div>
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="login-password" placeholder="••••••••"/>
+        <div class="err" id="err-password">Password must be at least 4 characters</div>
+      </div>
+      <button class="btn-login" onclick="doLogin()">🚀 Sign In &amp; Register</button>
+      <p class="login-note">Demo sandbox — any credentials work. All 3 fields required.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="t-title" id="toast-title"></div><div class="t-sub" id="toast-sub"></div></div>
+
+<script src="shared.js"></script>
+<script>
+  // Redirect if already logged in
+  if (getUser()) window.location.href = 'dashboard.html';
+
+  function doLogin() {
+    const name  = document.getElementById('login-name').value.trim();
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-password').value;
+    let ok = true;
+    ['name','email','password'].forEach(f => document.getElementById('err-' + f).style.display = 'none');
+    if (!name)                    { document.getElementById('err-name').style.display = 'block'; ok = false; }
+    if (!email || !email.includes('@')) { document.getElementById('err-email').style.display = 'block'; ok = false; }
+    if (pass.length < 4)          { document.getElementById('err-password').style.display = 'block'; ok = false; }
+    if (!ok) return;
+
+    setUser(name, email);
+
+    // Gainsight PX identify call
+    if (typeof aptrinsic === 'function') {
+      aptrinsic('identify', {
+        id: email,
+        email: email,
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ').slice(1).join(' ')
+      });
+    }
+
+    window.location.href = 'dashboard.html';
+  }
+</script>
+</body>
+</html>

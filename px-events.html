@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SportsPulse — PX Events</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="dashboard.html"><div class="logo-mark">🏆</div>SportsPulse</a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="register.html">Register &amp; Forms</a>
+    <a href="px-events.html" class="active">PX Events</a>
+  </div>
+  <div class="nav-user">
+    <div class="avatar" id="nav-avatar">A</div>
+    <span class="nav-name" id="nav-name"></span>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <div class="breadcrumb">Dashboard → PX Events</div>
+    <h2>⚡ Gainsight PX Event Triggers</h2>
+    <p>Fire <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px">aptrinsic('track', eventName, properties)</code> calls to simulate athlete interactions</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <div class="section-header">
+    <h3>Sport registration events</h3>
+    <p>Each card fires a real PX custom track event with relevant properties</p>
+  </div>
+  <div class="event-cards">
+    <div class="ev-card" onclick="trackPX('Event Viewed',{event:'City Marathon',sport:'Running',category:'Road Race'})">
+      <div class="ev-icon">👁️</div><h4>Event viewed</h4><p>Athlete browses an event detail page</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Registration Started',{sport:'Football',division:'Amateur',step:1})">
+      <div class="ev-icon">📝</div><h4>Registration started</h4><p>User begins the event registration flow</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Registration Completed',{sport:'Tennis',division:'Elite',fee:120})">
+      <div class="ev-icon">✅</div><h4>Registration completed</h4><p>Athlete successfully registers for an event</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Team Joined',{team:'Thunder Hawks',sport:'Basketball',size:12})">
+      <div class="ev-icon">🤝</div><h4>Team joined</h4><p>User accepts a team invite or joins a squad</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Payment Submitted',{amount:75,currency:'USD',method:'Card'})">
+      <div class="ev-icon">💳</div><h4>Payment submitted</h4><p>Registration fee payment initiated</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Event Withdrawn',{event:'City Marathon',reason:'Injury',daysBeforeEvent:14})">
+      <div class="ev-icon">❌</div><h4>Event withdrawn</h4><p>Athlete withdraws from a registered event</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Profile Updated',{field:'Personal Best',sport:'Swimming'})">
+      <div class="ev-icon">🏅</div><h4>Profile updated</h4><p>Athlete updates their profile or PB record</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Schedule Viewed',{week:'Jun 9-15',eventsShown:8})">
+      <div class="ev-icon">📅</div><h4>Schedule viewed</h4><p>User opens the events calendar or schedule</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Leaderboard Checked',{sport:'Athletics',filter:'Regional'})">
+      <div class="ev-icon">🏆</div><h4>Leaderboard checked</h4><p>Athlete views rankings or standings</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Coach Contacted',{method:'Message',sport:'Cycling'})">
+      <div class="ev-icon">📣</div><h4>Coach contacted</h4><p>Athlete sends a message to a coach</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Result Submitted',{event:'5K Run',time:'22:14',position:47})">
+      <div class="ev-icon">⏱️</div><h4>Result submitted</h4><p>Post-event performance result logged</p>
+    </div>
+    <div class="ev-card" onclick="trackPX('Share Triggered',{channel:'WhatsApp',event:'Summer Basketball League'})">
+      <div class="ev-icon">📤</div><h4>Event shared</h4><p>Athlete shares an event via social or link</p>
+    </div>
+  </div>
+
+  <!-- CUSTOM EVENT BUILDER -->
+  <div class="section-header"><h3>Custom event builder</h3><p>Build and fire your own PX track event with custom properties</p></div>
+  <div class="card" style="margin-bottom:2rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px">
+      <div class="inp-group">
+        <label>Event name *</label>
+        <input type="text" id="custom-event-name" placeholder="e.g. Kit Selected"/>
+      </div>
+      <div class="inp-group">
+        <label>Property 1 key</label>
+        <input type="text" id="prop1k" placeholder="e.g. sport"/>
+      </div>
+      <div class="inp-group">
+        <label>Property 1 value</label>
+        <input type="text" id="prop1v" placeholder="e.g. Football"/>
+      </div>
+      <div class="inp-group">
+        <label>Property 2 key</label>
+        <input type="text" id="prop2k" placeholder="e.g. tier"/>
+      </div>
+      <div class="inp-group">
+        <label>Property 2 value</label>
+        <input type="text" id="prop2v" placeholder="e.g. Elite"/>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="fireCustomEvent()">⚡ Fire Custom PX Event</button>
+  </div>
+
+  <!-- EVENT LOG -->
+  <div class="section-header"><h3>Session event log</h3><p>All PX events fired during this session</p></div>
+  <div id="event-log">
+    <div style="padding:1.25rem;font-size:13px;color:var(--muted);text-align:center" id="log-empty">No events fired yet — click any card above to start</div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="t-title" id="toast-title"></div><div class="t-sub" id="toast-sub"></div></div>
+
+<script src="shared.js"></script>
+<script>
+  const user = requireAuth();
+  if (user) populateNav(user);
+
+  function fireCustomEvent() {
+    const name = document.getElementById('custom-event-name').value.trim();
+    if (!name) { showToast('⚠️ Event name required', 'Please enter a name for your custom event'); return; }
+    const props = {};
+    const k1 = document.getElementById('prop1k').value.trim(), v1 = document.getElementById('prop1v').value.trim();
+    const k2 = document.getElementById('prop2k').value.trim(), v2 = document.getElementById('prop2v').value.trim();
+    if (k1 && v1) props[k1] = v1;
+    if (k2 && v2) props[k2] = v2;
+    trackPX(name, props);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SportsPulse — Register &amp; Forms</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="dashboard.html"><div class="logo-mark">🏆</div>SportsPulse</a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="register.html" class="active">Register &amp; Forms</a>
+    <a href="px-events.html">PX Events</a>
+  </div>
+  <div class="nav-user">
+    <div class="avatar" id="nav-avatar">A</div>
+    <span class="nav-name" id="nav-name"></span>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-banner">
+  <div class="page-banner-inner">
+    <div class="breadcrumb">Dashboard → Registration</div>
+    <h2>📝 Registration Components</h2>
+    <p>All UI components for testing PX feature tagging and interaction capture</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <!-- ── BUTTONS ── -->
+  <div class="section-header"><h3>Action buttons</h3><p>Different styles for registration CTAs, confirmations, and destructive actions</p></div>
+  <div class="btn-grid">
+    <button class="btn btn-primary"  onclick="fireEvent('register_click','Register Now CTA clicked')">🏅 Register Now</button>
+    <button class="btn btn-outline"  onclick="fireEvent('view_details','View Details clicked')">📋 View Details</button>
+    <button class="btn btn-navy"     onclick="fireEvent('join_team','Join Team clicked')">🤝 Join Team</button>
+    <button class="btn btn-ghost"    onclick="fireEvent('save_draft','Save as Draft clicked')">💾 Save Draft</button>
+    <button class="btn btn-success"  onclick="fireEvent('confirm_reg','Confirm Registration clicked')">✅ Confirm</button>
+    <button class="btn btn-danger"   onclick="fireEvent('withdraw','Withdraw from Event clicked')">❌ Withdraw</button>
+  </div>
+  <div class="btn-grid" style="margin-bottom:2rem">
+    <button class="btn btn-primary btn-pill" onclick="fireEvent('quick_register','Quick Register clicked')">⚡ Quick Register</button>
+    <button class="btn btn-outline btn-pill" onclick="fireEvent('set_reminder','Set Reminder clicked')">🔔 Set Reminder</button>
+    <button class="btn btn-primary btn-sm"   onclick="fireEvent('pay_now','Pay Now clicked')">Pay Now</button>
+    <button class="btn btn-navy btn-lg"      onclick="fireEvent('submit_reg','Submit Registration clicked')">🚀 Submit Registration</button>
+    <button class="btn btn-loading is-loading" id="btn-load" onclick="toggleLoad()">
+      <div class="spinner"></div><span class="btn-text">Processing…</span>
+    </button>
+  </div>
+
+  <!-- Segmented + tag -->
+  <div style="display:flex;flex-wrap:wrap;gap:24px;margin-bottom:2.5rem;align-items:flex-start">
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy2);margin-bottom:8px">Event category filter</div>
+      <div class="btn-seg">
+        <button class="active" onclick="segClick(this,'All')">All</button>
+        <button onclick="segClick(this,'Running')">🏃 Running</button>
+        <button onclick="segClick(this,'Team')">🤝 Team</button>
+        <button onclick="segClick(this,'Aquatic')">🏊 Aquatic</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy2);margin-bottom:8px">Skill level tags</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="tag-btn active" onclick="tagClick(this,'All levels')">All levels</button>
+        <button class="tag-btn" onclick="tagClick(this,'Beginner')">🟢 Beginner</button>
+        <button class="tag-btn" onclick="tagClick(this,'Intermediate')">🟡 Intermediate</button>
+        <button class="tag-btn" onclick="tagClick(this,'Elite')">🔴 Elite</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SELECTS ── -->
+  <div class="section-header"><h3>Select components</h3><p>Native HTML select, custom CSS dropdown, and pill multi-select</p></div>
+  <div class="selects-row">
+    <div class="sel-group">
+      <label>Native &lt;select&gt; — Choose sport</label>
+      <select onchange="fireEvent('sport_select','Sport selected: '+this.value)">
+        <option value="">Pick your sport…</option>
+        <option>⚽ Football</option>
+        <option>🏀 Basketball</option>
+        <option>🎾 Tennis</option>
+        <option>🏊 Swimming</option>
+        <option>🏃 Athletics</option>
+        <option>🏋️ Weightlifting</option>
+        <option>🚴 Cycling</option>
+      </select>
+    </div>
+
+    <div class="sel-group">
+      <label>Custom dropdown — Division</label>
+      <div class="custom-select" id="customSel">
+        <div class="cs-trigger" onclick="toggleCustom()">
+          <span id="custom-val">Select division…</span>
+          <span class="cs-arrow">▾</span>
+        </div>
+        <div class="cs-dropdown">
+          <div class="cs-option" onclick="selectCustom(this,'🥇 Division 1 — Elite')"><span class="cs-icon">🥇</span>Division 1 — Elite</div>
+          <div class="cs-option" onclick="selectCustom(this,'🥈 Division 2 — Semi-pro')"><span class="cs-icon">🥈</span>Division 2 — Semi-pro</div>
+          <div class="cs-option" onclick="selectCustom(this,'🥉 Division 3 — Amateur')"><span class="cs-icon">🥉</span>Division 3 — Amateur</div>
+          <div class="cs-option" onclick="selectCustom(this,'🌱 Youth Under-18')"><span class="cs-icon">🌱</span>Youth Under-18</div>
+          <div class="cs-option" onclick="selectCustom(this,'🧓 Masters 40+')"><span class="cs-icon">🧓</span>Masters 40+</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sel-group" style="min-width:270px">
+      <label>Pill select — Preferred training days</label>
+      <div class="pill-select">
+        <div class="pill-opt sel" onclick="pillToggle(this,'Mon')">Mon</div>
+        <div class="pill-opt" onclick="pillToggle(this,'Tue')">Tue</div>
+        <div class="pill-opt sel" onclick="pillToggle(this,'Wed')">Wed</div>
+        <div class="pill-opt" onclick="pillToggle(this,'Thu')">Thu</div>
+        <div class="pill-opt" onclick="pillToggle(this,'Fri')">Fri</div>
+        <div class="pill-opt" onclick="pillToggle(this,'Sat')">Sat</div>
+        <div class="pill-opt" onclick="pillToggle(this,'Sun')">Sun</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INPUTS ── -->
+  <div class="section-header"><h3>Registration form fields</h3><p>Text, search, validation states, date, number, textarea, toggles and range</p></div>
+  <div class="inputs-grid">
+    <div class="inp-group">
+      <label>Athlete full name</label>
+      <input type="text" placeholder="Your name" onfocus="fireEvent('name_focus','Athlete name field focused')"/>
+    </div>
+    <div class="inp-group">
+      <label>Search events</label>
+      <div class="inp-wrap">
+        <span class="icon">🔍</span>
+        <input type="text" placeholder="Search by sport, city…" onfocus="fireEvent('search_focus','Search field focused')"/>
+      </div>
+    </div>
+    <div class="inp-group has-error">
+      <label>Jersey number</label>
+      <input type="text" value="abc" placeholder="00"/>
+      <div class="inp-hint">⚠ Must be a number between 1–99</div>
+    </div>
+    <div class="inp-group has-success">
+      <label>Team code</label>
+      <input type="text" value="TEAM-Alpha-007" readonly/>
+      <div class="inp-hint">✓ Valid team code confirmed</div>
+    </div>
+    <div class="inp-group">
+      <label>Date of birth</label>
+      <input type="date" onfocus="fireEvent('dob_focus','DOB field focused')"/>
+    </div>
+    <div class="inp-group">
+      <label>Event registration date</label>
+      <input type="date" onfocus="fireEvent('reg_date_focus','Reg date field focused')"/>
+    </div>
+    <div class="inp-group">
+      <label>Personal best (seconds)</label>
+      <input type="number" placeholder="e.g. 3620" onfocus="fireEvent('pb_focus','Personal best field focused')"/>
+    </div>
+    <div class="inp-group">
+      <label>Team size</label>
+      <input type="number" min="1" max="50" placeholder="Number of players" onfocus="fireEvent('team_size_focus','Team size field focused')"/>
+    </div>
+  </div>
+  <div class="inputs-grid">
+    <div class="inp-group" style="grid-column:1/-1">
+      <label>Medical / special requirements</label>
+      <textarea placeholder="List any medical conditions, dietary requirements or accessibility needs…" onfocus="fireEvent('medical_focus','Medical notes field focused')"></textarea>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:32px;margin-top:1rem;margin-bottom:2rem;align-items:flex-start">
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy2);margin-bottom:12px">Preferences</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="toggle-wrap"><button class="toggle on" onclick="toggleSwitch(this,'Email notifications')"></button>Email notifications</div>
+        <div class="toggle-wrap"><button class="toggle" onclick="toggleSwitch(this,'SMS alerts')"></button>SMS alerts</div>
+        <div class="toggle-wrap"><button class="toggle on" onclick="toggleSwitch(this,'Public profile')"></button>Public athlete profile</div>
+        <div class="toggle-wrap"><button class="toggle" onclick="toggleSwitch(this,'Team discovery')"></button>Open to team invites</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:13px;font-weight:600;color:var(--navy2);margin-bottom:12px">Weekly training hours</div>
+      <div class="range-wrap">
+        <input type="range" min="0" max="40" value="15" id="rangeSlider" step="1"
+          oninput="updateRange(this.value)"
+          onchange="fireEvent('training_hours_change','Training hours set to '+this.value+'h')"/>
+        <div style="font-size:13px">Commitment: <span class="range-val" id="rangeVal">15</span> hrs/week</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="t-title" id="toast-title"></div><div class="t-sub" id="toast-sub"></div></div>
+
+<script src="shared.js"></script>
+<script>
+  const user = requireAuth();
+  if (user) {
+    populateNav(user);
+    initCustomSelect();
+  }
+</script>
+</body>
+</html>

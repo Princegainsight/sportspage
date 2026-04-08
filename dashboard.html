@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SportsPulse — Dashboard</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .hero-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a2744 100%);padding:3rem 2rem;position:relative;overflow:hidden}
+    .hero-banner::before{content:'';position:absolute;right:-60px;top:-60px;width:340px;height:340px;border-radius:50%;background:rgba(234,88,12,.12)}
+    .hero-banner::after{content:'';position:absolute;right:80px;bottom:-100px;width:220px;height:220px;border-radius:50%;background:rgba(234,88,12,.08)}
+    .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+    .hero-text h1{font-size:32px;font-weight:800;color:white;line-height:1.2;margin-bottom:.75rem}
+    .hero-text h1 span{color:var(--orange)}
+    .hero-text p{font-size:15px;color:rgba(255,255,255,.65);max-width:480px;line-height:1.6}
+    .hero-badges{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
+    .hbadge{background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500;border:1px solid rgba(255,255,255,.15)}
+    .hbadge.orange{background:var(--orange);border-color:var(--orange);color:white}
+    .hero-stats{display:flex;gap:1.5rem}
+    .hstat{text-align:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1rem 1.25rem}
+    .hstat-num{font-size:26px;font-weight:800;color:var(--orange)}
+    .hstat-label{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="dashboard.html"><div class="logo-mark">🏆</div>SportsPulse</a>
+  <div class="nav-links">
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="register.html">Register &amp; Forms</a>
+    <a href="px-events.html">PX Events</a>
+  </div>
+  <div class="nav-user">
+    <div class="avatar" id="nav-avatar">A</div>
+    <span class="nav-name" id="nav-name"></span>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Welcome back, <span id="welcome-name"></span>! 🏅</h1>
+      <p>Your sports registration dashboard is ready. Browse upcoming events, manage your registrations, and track your athletic journey.</p>
+      <div class="hero-badges">
+        <span class="hbadge orange">✓ PX Identify Fired</span>
+        <span class="hbadge">🏃 Active Athlete</span>
+        <span class="hbadge">📅 3 Upcoming Events</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">7</div><div class="hstat-label">Events joined</div></div>
+      <div class="hstat"><div class="hstat-num">2</div><div class="hstat-label">Active teams</div></div>
+      <div class="hstat"><div class="hstat-num">94</div><div class="hstat-label">PB score</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <!-- PX STATUS -->
+  <div class="px-status">
+    <div class="px-dot"></div>
+    <div>
+      <strong>Gainsight PX identify call fired on login.</strong><br/>
+      Payload: <code>aptrinsic('identify', { id: '<span id="px-email"></span>', email: '<span id="px-email2"></span>', firstName: '<span id="px-fname"></span>' })</code>
+    </div>
+  </div>
+
+  <!-- EVENT IMAGE CARDS -->
+  <div class="section-header">
+    <h3>Upcoming sporting events</h3>
+    <p>Hover or focus on a card to preview — click to register</p>
+  </div>
+  <div class="img-grid">
+    <div class="img-card" tabindex="0" onclick="showToast('📋 Registration opened','City Marathon 2025 — 42km Full Race')">
+      <div class="img-badge">🏃 Running</div>
+      <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80" alt="Marathon"/>
+      <div class="img-label">
+        <div><div class="img-label-text">City Marathon 2025</div><div class="img-label-sub">Jun 14 · 42km Full Race</div></div>
+        <div class="img-arrow">→</div>
+      </div>
+    </div>
+    <div class="img-card" tabindex="0" onclick="showToast('📋 Registration opened','Summer Basketball League — 5v5')">
+      <div class="img-badge">🏀 Basketball</div>
+      <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=80" alt="Basketball"/>
+      <div class="img-label">
+        <div><div class="img-label-text">Summer Basketball League</div><div class="img-label-sub">Jul 1 · 5v5 Tournament</div></div>
+        <div class="img-arrow">→</div>
+      </div>
+    </div>
+    <div class="img-card" tabindex="0" onclick="showToast('📋 Registration opened','Open Water Swim Challenge')">
+      <div class="img-badge">🏊 Swimming</div>
+      <img src="https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&q=80" alt="Swimming"/>
+      <div class="img-label">
+        <div><div class="img-label-text">Open Water Challenge</div><div class="img-label-sub">Jul 20 · 5km Open Water</div></div>
+        <div class="img-arrow">→</div>
+      </div>
+    </div>
+    <div class="img-card" tabindex="0" onclick="showToast('📋 Registration opened','Regional Tennis Open — Singles')">
+      <div class="img-badge">🎾 Tennis</div>
+      <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&q=80" alt="Tennis"/>
+      <div class="img-label">
+        <div><div class="img-label-text">Regional Tennis Open</div><div class="img-label-sub">Aug 5 · Singles &amp; Doubles</div></div>
+        <div class="img-arrow">→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK NAV -->
+  <div class="section-header"><h3>Quick navigation</h3></div>
+  <div class="quicknav">
+    <a class="qcard" href="register.html">
+      <div class="qcard-icon" style="background:#fff7ed">📝</div>
+      <div><h4>Register &amp; Forms</h4><p>Buttons, selects, and input fields to test all registration use cases</p></div>
+    </a>
+    <a class="qcard" href="px-events.html">
+      <div class="qcard-icon" style="background:#fef3c7">⚡</div>
+      <div><h4>PX Events</h4><p>Fire custom Gainsight PX track events and build your own payloads</p></div>
+    </a>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="t-title" id="toast-title"></div><div class="t-sub" id="toast-sub"></div></div>
+
+<script src="shared.js"></script>
+<script>
+  const user = requireAuth();
+  if (user) {
+    populateNav(user);
+    document.getElementById('welcome-name').textContent = user.name.split(' ')[0];
+    document.getElementById('px-email').textContent  = user.email;
+    document.getElementById('px-email2').textContent = user.email;
+    document.getElementById('px-fname').textContent  = user.name.split(' ')[0];
+  }
+</script>
+</body>
+</html>
