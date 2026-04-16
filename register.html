@@ -135,8 +135,27 @@
       <label>Search events</label>
       <div class="inp-wrap">
         <span class="icon">🔍</span>
-        <input type="text" placeholder="Search by sport, city…" onfocus="fireEvent('search_focus','Search field focused')"/>
+        <input type="text"  id="search-box" placeholder="Search by sport, city…" onfocus="fireEvent('search_focus','Search field focused')"/>
       </div>
+
+            <script>
+    let debounceTimer;
+
+    document.getElementById('search-box').addEventListener('input', function (e) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const value = e.target.value.trim();
+        const wordCount = value === '' ? 0 : value.split(/\s+/).length;
+
+        if (wordCount > 0 && wordCount < 4) {
+          aptrinsic('track', 'search_short_query', {
+            query: value,
+            wordCount: wordCount
+          });
+        }
+      }, 600);
+    });
+  </script>
     </div>
     <div class="inp-group has-error">
       <label>Jersey number</label>
