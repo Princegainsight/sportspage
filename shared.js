@@ -21,7 +21,8 @@ function waitForPX(callback, attempts) {
     console.warn('[PX] SDK not ready after 10s — giving up.');
     return;
   }
-  if (typeof aptrinsic === 'function' && aptrinsic.p) {
+  // Ready when __sdkBundleStarted is true (set by Gainsight PX after full init)
+  if (typeof aptrinsic === 'function' && aptrinsic.__sdkBundleStarted === true) {
     callback();
   } else {
     setTimeout(function() { waitForPX(callback, attempts + 1); }, 200);
