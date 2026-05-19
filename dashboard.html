@@ -124,6 +124,17 @@
   </div>
 
 </div>
+  <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;font-family:'Segoe UI',sans-serif;display:flex;align-items:center;gap:10px;background:#1c2030;border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:10px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+ 
+  <span style="font-size:13px;color:rgba(255,255,255,0.5);">Was this helpful?</span>
+ 
+  <button onclick="aptrinsic('track','dashboard_feedback',{vote:'like'}); this.style.color='#22c97a';"
+    style="background:none;border:none;font-size:22px;cursor:pointer;line-height:1;padding:0;">👍</button>
+ 
+  <button onclick="aptrinsic('track','dashboard_feedback',{vote:'dislike'}); this.style.color='#e8401a';"
+    style="background:none;border:none;font-size:22px;cursor:pointer;line-height:1;padding:0;">👎</button>
+ 
+</div>
 
 <!-- Toast -->
 <div class="toast" id="toast"><div class="t-title" id="toast-title"></div><div class="t-sub" id="toast-sub"></div></div>
