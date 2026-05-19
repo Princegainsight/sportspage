@@ -104,15 +104,24 @@
 
     setUser(name, email);
 
-    // Gainsight PX identify call
-    if (typeof aptrinsic === 'function') {
-      aptrinsic('identify', {
+    // Gainsight PX identify call — uses safe retry wrapper from shared.js
+    pxIdentify(
+      {
         id: email,
         email: email,
         firstName: name.split(' ')[0],
-        lastName: name.split(' ').slice(1).join(' ')
-      });
-    }
+        lastName: name.split(' ').slice(1).join(' '),
+        signUpDate: Date.now(),
+        plan: 'gold',
+        price: 95.5,
+        userHash: ''
+      },
+      {
+        id: 'IBM',
+        name: 'International Business Machine',
+        Program: 'Platinum'
+      }
+    );
 
     window.location.href = 'dashboard.html';
   }
