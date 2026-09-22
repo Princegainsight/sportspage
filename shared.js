@@ -9,7 +9,7 @@
   r.async=!0, r.src=a+"?a="+e;
   var c=t.getElementsByTagName("script")[0];
   c.parentNode.insertBefore(r,c);
-})(window, document, "https://web-sdk.aptrinsic.com/api/aptrinsic.js", "AP-R4CDDB8CUEXP-2");
+})(window, document, "https://web-sdk.aptrinsic.com/api/aptrinsic.js", "AP-NUB1I4HQ7CAH-2");
 
 // ── 2. Safe PX wrappers — retry until SDK is fully loaded ────────────────
 // Always use pxTrack() and pxIdentify() — never call aptrinsic() directly.
